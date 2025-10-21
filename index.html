@@ -296,6 +296,22 @@
             color: #666;
             margin: 3rem 0;
             font-size: 0.9rem;
+            line-height: 1.5;
+        }
+        
+        /* NEW STYLES FOR NOTES SECTION */
+        #notes-editor {
+            min-height: 200px;
+            background: rgba(0,0,0,0.5);
+            border: 1px solid #444;
+            padding: 1rem;
+            color: #e0e0e0;
+            border-radius: 4px;
+            outline: none;
+            transition: border-color 0.3s ease;
+        }
+        #notes-editor:focus {
+            border-color: #ff0000;
         }
 
         footer {
@@ -326,7 +342,7 @@
 <body>
     <div class="hero">
         <h1>THE BLUEPRINT</h1>
-        <div class="hero-subtitle">System Protocols • October 21, 2025</div>
+        <div class="hero-subtitle" id="current-date-display">System Protocols</div>
         <div class="goggins-quote">
             "You are in danger of living a life so comfortable and soft, that you will die without ever realizing your true potential."
             <cite>— David Goggins</cite>
@@ -335,12 +351,15 @@
     </div>
 
     <div class="container">
+        
+        <!-- PROTOCOL SECTIONS 1-4 (SAME AS BEFORE) -->
         <div class="section">
             <div class="section-header" onclick="toggleSection('section1')">
                 <div class="section-number">1</div>
                 <div class="section-title">Core System & Discipline Protocols <span class="status-indicator"></span></div>
             </div>
             <div class="collapsible-content active" id="section1">
+                <!-- Content for Section 1 goes here -->
                 <div class="protocol">
                     <div class="protocol-title">1.1 Daily Stand-up</div>
                     <div class="protocol-need">NEED: Enforce accountability, track metrics, prevent aimless drift</div>
@@ -374,7 +393,7 @@
                 </div>
             </div>
         </div>
-
+        
         <div class="quote-divider">
             <blockquote>
                 "It won't always go your way, so you can't get trapped in this idea that just because you've imagined a possibility for yourself that you somehow deserve it. Your entitled mind is dead weight. Cut it loose."
@@ -388,6 +407,7 @@
                 <div class="section-title">Mission Execution (Work) Protocols <span class="status-indicator"></span></div>
             </div>
             <div class="collapsible-content active" id="section2">
+               <!-- Content for Section 2 -->
                 <div class="protocol">
                     <div class="protocol-title">2.1 The Engineer's Invocation</div>
                     <div class="protocol-need">NEED: Prime your identity and focus immediately before deep work, overwriting the "lazy person" identity.</div>
@@ -438,20 +458,21 @@
                 </div>
             </div>
         </div>
-
+        
         <div class="quote-divider">
             <blockquote>
                 "The only way you gain mental toughness is to do things you're not happy doing. If you continue doing things that you're satisfied and make you happy, you're not getting stronger."
                 <cite>— David Goggins</cite>
             </blockquote>
         </div>
-
+        
         <div class="section">
             <div class="section-header" onclick="toggleSection('section3')">
                 <div class="section-number">3</div>
                 <div class="section-title">System Defense Protocols <span class="status-indicator"></span></div>
             </div>
             <div class="collapsible-content active" id="section3">
+                <!-- Content for Section 3 -->
                 <div class="protocol">
                     <div class="protocol-title">3.1 Environmental Protocol 1.1</div>
                     <div class="protocol-need">NEED: Create a sterile, distraction-free workspace optimized for deep work.</div>
@@ -505,14 +526,15 @@
                 <cite>— David Goggins</cite>
             </blockquote>
         </div>
-
+        
         <div class="section">
             <div class="section-header" onclick="toggleSection('section4')">
                 <div class="section-number">4</div>
                 <div class="section-title">Contingency Protocols <span class="status-indicator"></span></div>
             </div>
             <div class="collapsible-content active" id="section4">
-                <div class="protocol">
+                <!-- Content for Section 4 -->
+                 <div class="protocol">
                     <div class="protocol-title">4.1 Medical Standby</div>
                     <div class="protocol-need">NEED: Manage illness without total system collapse and ensure structured recovery.</div>
                     <div class="protocol-execution">
@@ -527,27 +549,34 @@
             </div>
         </div>
 
-        <div class="quote-divider">
-            <blockquote>
-                "If you can see yourself doing something, you can do it. If you can't see yourself doing it, usually you can't achieve it."
-                <cite>— David Goggins</cite>
-            </blockquote>
+        <!-- NEW NOTES SECTION -->
+        <div class="section">
+            <div class="section-header" onclick="toggleSection('section5')">
+                <div class="section-number">5</div>
+                <div class="section-title">System Log / Notes <span class="status-indicator"></span></div>
+            </div>
+            <div class="collapsible-content active" id="section5">
+                <p style="color: #aaa; margin-bottom: 1rem;">This is your personal log. Thoughts and notes typed here are saved automatically to your browser's local storage.</p>
+                <div id="notes-editor" contenteditable="true" onkeyup="saveNotes()"></div>
+            </div>
         </div>
 
         <div class="timestamp">
-            Document Version: October 21, 2025<br>
             System Status: OPERATIONAL<br>
-            Next Review: As Required
+            <span id="last-modified-display"></span>
         </div>
     </div>
 
     <footer>
         <p>THE BLUEPRINT // DISCIPLINE EQUALS FREEDOM</p>
         <p style="margin-top: 1rem; color: #444;">Stay hard. Execute the mission. No excuses.</p>
-      <p>All Rights Reserved - UJJWAL SHARMA</p>
+        <p>What if I can pull off a fucking miracle? What if I meant to be the greatest</p>
     </footer>
 
     <script>
+        // --- CORE FUNCTIONALITY ---
+
+        // Function to toggle collapsible sections
         function toggleSection(sectionId) {
             const content = document.getElementById(sectionId);
             content.classList.toggle('active');
@@ -570,10 +599,55 @@
             observer.observe(section);
         });
 
-        // Smooth scroll
+        // Smooth scroll for hero button
         document.querySelector('.scroll-indicator').addEventListener('click', () => {
             window.scrollTo({ top: window.innerHeight, behavior: 'smooth' });
         });
+        
+        // --- NEW DYNAMIC FUNCTIONALITY ---
+
+        // 1. DYNAMIC DATE AND TIMESTAMPS
+        function setDynamicDates() {
+            const currentDateElement = document.getElementById('current-date-display');
+            const lastModifiedElement = document.getElementById('last-modified-display');
+
+            // Set the main "As of" date to today
+            const today = new Date();
+            const options = { year: 'numeric', month: 'long', day: 'numeric' };
+            currentDateElement.textContent = `System Protocols • ${today.toLocaleDateString(undefined, options)}`;
+
+            // Set the "Last Modified" date from the file properties
+            if (document.lastModified) {
+                lastModifiedElement.textContent = `Last Modified: ${document.lastModified}`;
+            }
+        }
+
+        // 2. NOTES SECTION WITH LOCAL STORAGE
+        const notesEditor = document.getElementById('notes-editor');
+
+        // Function to save notes to local storage
+        function saveNotes() {
+            localStorage.setItem('blueprint_notes', notesEditor.innerHTML);
+        }
+
+        // Function to load notes from local storage
+        function loadNotes() {
+            const savedNotes = localStorage.getItem('blueprint_notes');
+            if (savedNotes) {
+                notesEditor.innerHTML = savedNotes;
+            } else {
+                // Default text if no notes are saved yet
+                notesEditor.innerHTML = '<div>What is on your mind</div>';
+            }
+        }
+
+        // --- INITIALIZATION ---
+        // Run these functions when the page has fully loaded
+        window.onload = () => {
+            setDynamicDates();
+            loadNotes();
+        };
+
     </script>
 </body>
 </html>
