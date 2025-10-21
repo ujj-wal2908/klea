@@ -102,28 +102,36 @@
         .collapsible-content.active { max-height: 5000px; }
         .timestamp { text-align: center; color: #666; margin: 3rem 0; font-size: 0.9rem; line-height: 1.5; }
         
-        /* --- NEW & MODIFIED STYLES --- */
-        .nav-button {
+        /* --- NEW NAVIGATION STYLES --- */
+        .quick-nav {
             position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background-color: #ff0000;
-            color: #fff;
-            padding: 1rem;
-            border-radius: 50%;
-            width: 80px;
-            height: 80px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            font-weight: bold;
-            cursor: pointer;
+            top: 50%;
+            left: 10px;
+            transform: translateY(-50%);
             z-index: 1000;
-            box-shadow: 0 5px 20px rgba(255,0,0,0.5);
-            transition: transform 0.2s ease;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
         }
-        .nav-button:hover { transform: scale(1.1); }
+        .nav-item {
+            background: rgba(255, 0, 0, 0.7);
+            backdrop-filter: blur(5px);
+            color: #fff;
+            padding: 10px 8px;
+            border-radius: 5px;
+            cursor: pointer;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            font-weight: bold;
+            transition: all 0.2s ease-in-out;
+            border: 1px solid rgba(255,255,255,0.1);
+            text-align: center;
+        }
+        .nav-item:hover {
+            background: #ff0000;
+            transform: translateX(5px) scale(1.1);
+            box-shadow: 0 0 15px rgba(255,0,0,0.5);
+        }
 
         #notes-editor {
             width: 100%;
@@ -151,21 +159,25 @@
             text-transform: uppercase;
         }
         .btn:hover { background: #ff0000; color: #fff; }
-        .btn-primary { background: #ff0000; color: #fff; }
-        .btn-primary:hover { background: #d40000; border-color: #d40000; }
 
         footer { text-align: center; padding: 2rem; background: #000; color: #666; margin-top: 4rem; }
         @media (max-width: 768px) {
             .hero h1 { font-size: 2.5rem; letter-spacing: 4px; }
             .goggins-quote { font-size: 1rem; padding: 1rem; }
             .section-title { font-size: 1.5rem; }
-            .nav-button { width: 60px; height: 60px; font-size: 0.8rem; }
+            .quick-nav { display: none; /* Hides vertical nav on mobile for more space */ }
         }
     </style>
 </head>
 <body>
-    <!-- FLOATING NAVIGATION BUTTON -->
-    <div class="nav-button" onclick="scrollToNotes()">Go To<br>Logs</div>
+    <!-- FLOATING SECTION NAVIGATION -->
+    <div class="quick-nav">
+        <div class="nav-item" onclick="scrollToSection('section1')">Core</div>
+        <div class="nav-item" onclick="scrollToSection('section2')">Work</div>
+        <div class="nav-item" onclick="scrollToSection('section3')">Defense</div>
+        <div class="nav-item" onclick="scrollToSection('section4')">Contingency</div>
+        <div class="nav-item" onclick="scrollToSection('notes-section')">Logs</div>
+    </div>
 
     <div class="hero">
         <h1>THE BLUEPRINT</h1>
@@ -178,13 +190,13 @@
     </div>
 
     <div class="container">
-        <!-- PROTOCOL SECTIONS 1-4 (Unchanged) -->
-        <div class="section">
-            <div class="section-header" onclick="toggleSection('section1')">
+        <!-- PROTOCOL SECTIONS -->
+        <div class="section" id="section1">
+            <div class="section-header" onclick="toggleSection('content1')">
                 <div class="section-number">1</div>
                 <div class="section-title">Core System & Discipline Protocols <span class="status-indicator"></span></div>
             </div>
-            <div class="collapsible-content active" id="section1">
+            <div class="collapsible-content active" id="content1">
                 <div class="protocol">
                     <div class="protocol-title">1.1 Daily Stand-up</div>
                     <div class="protocol-need">NEED: Enforce accountability, track metrics, prevent aimless drift</div>
@@ -219,12 +231,12 @@
         <div class="quote-divider">
             <blockquote>"It won't always go your way, so you can't get trapped in this idea that just because you've imagined a possibility for yourself that you somehow deserve it. Your entitled mind is dead weight. Cut it loose."<cite>— David Goggins</cite></blockquote>
         </div>
-        <div class="section">
-            <div class="section-header" onclick="toggleSection('section2')">
+        <div class="section" id="section2">
+            <div class="section-header" onclick="toggleSection('content2')">
                 <div class="section-number">2</div>
                 <div class="section-title">Mission Execution (Work) Protocols <span class="status-indicator"></span></div>
             </div>
-            <div class="collapsible-content active" id="section2">
+            <div class="collapsible-content active" id="content2">
                 <div class="protocol">
                     <div class="protocol-title">2.1 The Engineer's Invocation</div>
                     <div class="protocol-need">NEED: Prime your identity and focus immediately before deep work, overwriting the "lazy person" identity.</div>
@@ -266,12 +278,12 @@
         <div class="quote-divider">
             <blockquote>"The only way you gain mental toughness is to do things you're not happy doing. If you continue doing things that you're satisfied and make you happy, you're not getting stronger."<cite>— David Goggins</cite></blockquote>
         </div>
-        <div class="section">
-            <div class="section-header" onclick="toggleSection('section3')">
+        <div class="section" id="section3">
+            <div class="section-header" onclick="toggleSection('content3')">
                 <div class="section-number">3</div>
                 <div class="section-title">System Defense Protocols <span class="status-indicator"></span></div>
             </div>
-            <div class="collapsible-content active" id="section3">
+            <div class="collapsible-content active" id="content3">
                 <div class="protocol">
                     <div class="protocol-title">3.1 Environmental Protocol 1.1</div>
                     <div class="protocol-need">NEED: Create a sterile, distraction-free workspace optimized for deep work.</div>
@@ -297,12 +309,12 @@
         <div class="quote-divider">
             <blockquote>"We live in an external world. Everything, you have to see it, touch it. If you can for the rest of your life, live inside yourself - to find greatness, you have to go inside."<cite>— David Goggins</cite></blockquote>
         </div>
-        <div class="section">
-            <div class="section-header" onclick="toggleSection('section4')">
+        <div class="section" id="section4">
+            <div class="section-header" onclick="toggleSection('content4')">
                 <div class="section-number">4</div>
                 <div class="section-title">Contingency Protocols <span class="status-indicator"></span></div>
             </div>
-            <div class="collapsible-content active" id="section4">
+            <div class="collapsible-content active" id="content4">
                 <div class="protocol">
                     <div class="protocol-title">4.1 Medical Standby</div>
                     <div class="protocol-need">NEED: Manage illness without total system collapse and ensure structured recovery.</div>
@@ -311,19 +323,18 @@
             </div>
         </div>
 
-        <!-- NEW NOTES SECTION -->
+        <!-- NOTES SECTION -->
         <div class="section" id="notes-section">
-            <div class="section-header" onclick="toggleSection('section5')">
+            <div class="section-header" onclick="toggleSection('content5')">
                 <div class="section-number">5</div>
                 <div class="section-title">System Log & Notes <span class="status-indicator"></span></div>
             </div>
-            <div class="collapsible-content active" id="section5">
-                <div class="protocol-need" style="color:#ff5555;">IMPORTANT: Notes are NOT saved automatically. After editing, click "Download Full Blueprint" to save a new version of this file with your notes included.</div>
-                <textarea id="notes-editor"><!-- YOUR NOTES ARE STORED HERE. LEAVE THIS COMMENT. --></textarea>
+            <div class="collapsible-content active" id="content5">
+                <div class="protocol-need" style="color:#ffaa00;">Notes are not saved to this file. Use the buttons to add a timestamped log entry and download your notes as a separate .txt file.</div>
+                <textarea id="notes-editor"></textarea>
                 <div class="notes-controls">
                     <button class="btn" onclick="addLogEntry()">Add Log Entry Template</button>
                     <button class="btn" onclick="downloadNotesTxt()">Download Notes as .TXT</button>
-                    
                 </div>
             </div>
         </div>
@@ -337,13 +348,13 @@
     <footer>
         <p>THE BLUEPRINT // DISCIPLINE EQUALS FREEDOM</p>
         <p style="margin-top: 1rem; color: #444;">Stay hard. Execute the mission. No excuses.</p>
-        <p>What if I can pull off a fucking miracle? What if I meant to be the greatest</p>
+        <p style="margin-top: 0.5rem; color: #444; font-style: italic;">"What if I can pull off a fucking miracle? What if I meant to be the greatest"</p>
     </footer>
 
     <script>
         // --- CORE FUNCTIONALITY ---
-        function toggleSection(sectionId) {
-            document.getElementById(sectionId).classList.toggle('active');
+        function toggleSection(contentId) {
+            document.getElementById(contentId).classList.toggle('active');
         }
 
         const observer = new IntersectionObserver((entries) => {
@@ -364,7 +375,7 @@
 
         // --- NEW DYNAMIC FUNCTIONALITY ---
         
-        // 1. DYNAMIC DATE AND TIMESTAMPS
+        // 1. DYNAMIC DATE
         function setDynamicDates() {
             const currentDateElement = document.getElementById('current-date-display');
             const lastModifiedElement = document.getElementById('last-modified-display');
@@ -377,8 +388,8 @@
         }
 
         // 2. QUICK NAVIGATION
-        function scrollToNotes() {
-            document.getElementById('notes-section').scrollIntoView();
+        function scrollToSection(sectionId) {
+            document.getElementById(sectionId).scrollIntoView({ behavior: 'smooth' });
         }
 
         // 3. NOTES AND LOGS
@@ -396,44 +407,22 @@
             const template = `\n\n--- LOG ENTRY: ${timestamp} ---\n\n- Metric 1:\n- Metric 2:\n- Observations:\n`;
             
             notesEditor.value += template;
-            notesEditor.scrollTop = notesEditor.scrollHeight; // Auto-scroll to bottom
+            notesEditor.scrollTop = notesEditor.scrollHeight;
             notesEditor.focus();
         }
 
-        // 4. DOWNLOAD FUNCTIONALITY
-        
-        // Function to download ONLY the notes as a .txt file
+        // 4. DOWNLOAD NOTES AS .TXT
         function downloadNotesTxt() {
             const textContent = notesEditor.value;
+            if (!textContent) {
+                alert("Notes are empty. Nothing to download.");
+                return;
+            }
             const blob = new Blob([textContent], { type: 'text/plain;charset=utf-8' });
             const url = URL.createObjectURL(blob);
             const link = document.createElement('a');
             link.href = url;
             link.download = `Blueprint-Notes-${new Date().toISOString().slice(0,10)}.txt`;
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-            URL.revokeObjectURL(url);
-        }
-
-        // Function to download the ENTIRE HTML file with updated notes
-        function downloadFullBlueprint() {
-            const notesContent = notesEditor.value;
-            
-            // We need to escape the closing textarea tag if it appears in the notes
-            const safeNotesContent = notesContent.replace(/<\/textarea>/g, '&lt;/textarea&gt;');
-
-            // Get the entire current HTML of the page
-            const currentHtml = document.documentElement.outerHTML;
-            
-            // Replace the placeholder comment in the textarea with the new, safe content
-            const newHtml = currentHtml.replace(/<!-- YOUR NOTES ARE STORED HERE. LEAVE THIS COMMENT. -->/, safeNotesContent);
-
-            const blob = new Blob([newHtml], { type: 'text/html;charset=utf-8' });
-            const url = URL.createObjectURL(blob);
-            const link = document.createElement('a');
-            link.href = url;
-            link.download = 'index.html'; // Name the file so it's easy to replace
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
