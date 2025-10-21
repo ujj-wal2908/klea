@@ -5,12 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The Blueprint - Protocol System</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
         body {
             font-family: 'Courier New', monospace;
             background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
@@ -18,7 +14,6 @@
             line-height: 1.6;
             overflow-x: hidden;
         }
-
         .hero {
             height: 100vh;
             display: flex;
@@ -30,29 +25,14 @@
             position: relative;
             overflow: hidden;
         }
-
         .hero::before {
             content: '';
             position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: repeating-linear-gradient(
-                0deg,
-                transparent,
-                transparent 2px,
-                rgba(255, 0, 0, 0.03) 2px,
-                rgba(255, 0, 0, 0.03) 4px
-            );
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(255, 0, 0, 0.03) 2px, rgba(255, 0, 0, 0.03) 4px);
             animation: scan 8s linear infinite;
         }
-
-        @keyframes scan {
-            0% { transform: translateY(0); }
-            100% { transform: translateY(50px); }
-        }
-
+        @keyframes scan { 0% { transform: translateY(0); } 100% { transform: translateY(50px); } }
         .hero h1 {
             font-size: 4rem;
             color: #ff0000;
@@ -63,19 +43,8 @@
             animation: glow 2s ease-in-out infinite alternate;
             z-index: 1;
         }
-
-        @keyframes glow {
-            from { text-shadow: 0 0 20px rgba(255, 0, 0, 0.5); }
-            to { text-shadow: 0 0 40px rgba(255, 0, 0, 0.8), 0 0 60px rgba(255, 0, 0, 0.6); }
-        }
-
-        .hero-subtitle {
-            font-size: 1.2rem;
-            color: #888;
-            margin-bottom: 3rem;
-            z-index: 1;
-        }
-
+        @keyframes glow { from { text-shadow: 0 0 20px rgba(255, 0, 0, 0.5); } to { text-shadow: 0 0 40px rgba(255, 0, 0, 0.8), 0 0 60px rgba(255, 0, 0, 0.6); } }
+        .hero-subtitle { font-size: 1.2rem; color: #888; margin-bottom: 3rem; z-index: 1; }
         .goggins-quote {
             max-width: 800px;
             padding: 2rem;
@@ -89,18 +58,7 @@
             z-index: 1;
             animation: fadeInUp 1s ease-out;
         }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
         .scroll-indicator {
             position: absolute;
             bottom: 30px;
@@ -108,20 +66,10 @@
             color: #ff0000;
             animation: bounce 2s infinite;
             z-index: 1;
+            cursor: pointer;
         }
-
-        @keyframes bounce {
-            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
-            40% { transform: translateY(-20px); }
-            60% { transform: translateY(-10px); }
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 2rem;
-        }
-
+        @keyframes bounce { 0%, 20%, 50%, 80%, 100% { transform: translateY(0); } 40% { transform: translateY(-20px); } 60% { transform: translateY(-10px); } }
+        .container { max-width: 1200px; margin: 0 auto; padding: 2rem; }
         .section {
             margin: 4rem 0;
             padding: 2rem;
@@ -129,179 +77,57 @@
             border: 1px solid #333;
             border-radius: 8px;
             backdrop-filter: blur(10px);
-            animation: slideIn 0.6s ease-out;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, opacity 0.6s ease;
         }
-
-        .section:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(255, 0, 0, 0.2);
-        }
-
-        @keyframes slideIn {
-            from {
-                opacity: 0;
-                transform: translateX(-50px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-
-        .section-header {
-            display: flex;
-            align-items: center;
-            margin-bottom: 1.5rem;
-            cursor: pointer;
-        }
-
-        .section-number {
-            font-size: 3rem;
-            color: #ff0000;
-            font-weight: bold;
-            margin-right: 1rem;
-            text-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
-        }
-
-        .section-title {
-            font-size: 2rem;
-            color: #fff;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-        }
-
-        .protocol {
-            margin: 2rem 0;
-            padding: 1.5rem;
-            background: rgba(0, 0, 0, 0.4);
-            border-left: 3px solid #ff0000;
-            transition: all 0.3s ease;
-        }
-
-        .protocol:hover {
-            background: rgba(255, 0, 0, 0.1);
-            border-left-width: 6px;
-        }
-
-        .protocol-title {
-            font-size: 1.5rem;
-            color: #ff0000;
-            margin-bottom: 0.5rem;
-            display: flex;
-            align-items: center;
-        }
-
-        .protocol-title::before {
-            content: '▶';
-            margin-right: 0.5rem;
-            font-size: 0.8rem;
-        }
-
-        .protocol-need {
-            color: #ffaa00;
-            margin: 1rem 0;
-            font-weight: bold;
-        }
-
-        .protocol-execution {
-            color: #aaa;
-            line-height: 1.8;
-        }
-
-        .protocol-execution ul {
-            margin-left: 2rem;
-            margin-top: 0.5rem;
-        }
-
-        .protocol-execution li {
-            margin: 0.5rem 0;
-        }
-
-        .time-badge {
-            display: inline-block;
-            background: #ff0000;
-            color: #fff;
-            padding: 0.3rem 0.8rem;
-            border-radius: 4px;
-            font-weight: bold;
-            font-size: 0.9rem;
-            margin: 0.3rem;
-        }
-
-        .status-indicator {
-            display: inline-block;
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            background: #00ff00;
-            box-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
-            animation: pulse 2s infinite;
-            margin-left: 1rem;
-        }
-
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.3; }
-        }
-
-        .mvd-badge {
-            background: #ff6600;
-            color: #fff;
-            padding: 0.5rem 1rem;
-            border-radius: 4px;
-            display: inline-block;
-            font-weight: bold;
-            margin-top: 1rem;
-        }
-
-        .quote-divider {
-            text-align: center;
-            margin: 4rem 0;
-            padding: 2rem;
-            background: linear-gradient(135deg, rgba(255, 0, 0, 0.1), rgba(0, 0, 0, 0.3));
-            border-radius: 8px;
-        }
-
-        .quote-divider blockquote {
-            font-size: 1.5rem;
-            font-style: italic;
-            color: #fff;
-            border-left: 4px solid #ff0000;
-            padding-left: 2rem;
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        .quote-divider cite {
-            display: block;
-            margin-top: 1rem;
-            color: #ff0000;
-            font-weight: bold;
-            font-size: 1.1rem;
-        }
-
-        .collapsible-content {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.5s ease;
-        }
-
-        .collapsible-content.active {
-            max-height: 5000px;
-        }
-
-        .timestamp {
-            text-align: center;
-            color: #666;
-            margin: 3rem 0;
-            font-size: 0.9rem;
-            line-height: 1.5;
-        }
+        .section:hover { transform: translateY(-5px); box-shadow: 0 10px 30px rgba(255, 0, 0, 0.2); }
+        .section-header { display: flex; align-items: center; margin-bottom: 1.5rem; cursor: pointer; }
+        .section-number { font-size: 3rem; color: #ff0000; font-weight: bold; margin-right: 1rem; text-shadow: 0 0 10px rgba(255, 0, 0, 0.5); }
+        .section-title { font-size: 2rem; color: #fff; text-transform: uppercase; letter-spacing: 3px; }
+        .protocol { margin: 2rem 0; padding: 1.5rem; background: rgba(0, 0, 0, 0.4); border-left: 3px solid #ff0000; transition: all 0.3s ease; }
+        .protocol:hover { background: rgba(255, 0, 0, 0.1); border-left-width: 6px; }
+        .protocol-title { font-size: 1.5rem; color: #ff0000; margin-bottom: 0.5rem; display: flex; align-items: center; }
+        .protocol-title::before { content: '▶'; margin-right: 0.5rem; font-size: 0.8rem; }
+        .protocol-need { color: #ffaa00; margin: 1rem 0; font-weight: bold; }
+        .protocol-execution { color: #aaa; line-height: 1.8; }
+        .protocol-execution ul { margin-left: 2rem; margin-top: 0.5rem; }
+        .protocol-execution li { margin: 0.5rem 0; }
+        .time-badge { display: inline-block; background: #ff0000; color: #fff; padding: 0.3rem 0.8rem; border-radius: 4px; font-weight: bold; font-size: 0.9rem; margin: 0.3rem; }
+        .status-indicator { display: inline-block; width: 12px; height: 12px; border-radius: 50%; background: #00ff00; box-shadow: 0 0 10px rgba(0, 255, 0, 0.5); animation: pulse 2s infinite; margin-left: 1rem; }
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+        .mvd-badge { background: #ff6600; color: #fff; padding: 0.5rem 1rem; border-radius: 4px; display: inline-block; font-weight: bold; margin-top: 1rem; }
+        .quote-divider { text-align: center; margin: 4rem 0; padding: 2rem; background: linear-gradient(135deg, rgba(255, 0, 0, 0.1), rgba(0, 0, 0, 0.3)); border-radius: 8px; }
+        .quote-divider blockquote { font-size: 1.5rem; font-style: italic; color: #fff; border-left: 4px solid #ff0000; padding-left: 2rem; max-width: 800px; margin: 0 auto; }
+        .quote-divider cite { display: block; margin-top: 1rem; color: #ff0000; font-weight: bold; font-size: 1.1rem; }
+        .collapsible-content { max-height: 0; overflow: hidden; transition: max-height 0.5s ease; }
+        .collapsible-content.active { max-height: 5000px; }
+        .timestamp { text-align: center; color: #666; margin: 3rem 0; font-size: 0.9rem; line-height: 1.5; }
         
-        /* NEW STYLES FOR NOTES SECTION */
+        /* --- NEW & MODIFIED STYLES --- */
+        .nav-button {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #ff0000;
+            color: #fff;
+            padding: 1rem;
+            border-radius: 50%;
+            width: 80px;
+            height: 80px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            font-weight: bold;
+            cursor: pointer;
+            z-index: 1000;
+            box-shadow: 0 5px 20px rgba(255,0,0,0.5);
+            transition: transform 0.2s ease;
+        }
+        .nav-button:hover { transform: scale(1.1); }
+
         #notes-editor {
-            min-height: 200px;
+            width: 100%;
+            min-height: 300px;
             background: rgba(0,0,0,0.5);
             border: 1px solid #444;
             padding: 1rem;
@@ -309,37 +135,38 @@
             border-radius: 4px;
             outline: none;
             transition: border-color 0.3s ease;
+            font-size: 1rem;
+            line-height: 1.7;
         }
-        #notes-editor:focus {
-            border-color: #ff0000;
+        #notes-editor:focus { border-color: #ff0000; }
+        .notes-controls { margin-top: 1rem; display: flex; gap: 1rem; flex-wrap: wrap; }
+        .btn {
+            padding: 0.8rem 1.2rem;
+            border: 1px solid #ff0000;
+            background: transparent;
+            color: #ff0000;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
         }
+        .btn:hover { background: #ff0000; color: #fff; }
+        .btn-primary { background: #ff0000; color: #fff; }
+        .btn-primary:hover { background: #d40000; border-color: #d40000; }
 
-        footer {
-            text-align: center;
-            padding: 2rem;
-            background: #000;
-            color: #666;
-            margin-top: 4rem;
-        }
-
+        footer { text-align: center; padding: 2rem; background: #000; color: #666; margin-top: 4rem; }
         @media (max-width: 768px) {
-            .hero h1 {
-                font-size: 2.5rem;
-                letter-spacing: 4px;
-            }
-
-            .goggins-quote {
-                font-size: 1rem;
-                padding: 1rem;
-            }
-
-            .section-title {
-                font-size: 1.5rem;
-            }
+            .hero h1 { font-size: 2.5rem; letter-spacing: 4px; }
+            .goggins-quote { font-size: 1rem; padding: 1rem; }
+            .section-title { font-size: 1.5rem; }
+            .nav-button { width: 60px; height: 60px; font-size: 0.8rem; }
         }
     </style>
 </head>
 <body>
+    <!-- FLOATING NAVIGATION BUTTON -->
+    <div class="nav-button" onclick="scrollToNotes()">Go To<br>Logs</div>
+
     <div class="hero">
         <h1>THE BLUEPRINT</h1>
         <div class="hero-subtitle" id="current-date-display">System Protocols</div>
@@ -347,19 +174,17 @@
             "You are in danger of living a life so comfortable and soft, that you will die without ever realizing your true potential."
             <cite>— David Goggins</cite>
         </div>
-        <div class="scroll-indicator">↓</div>
+        <div class="scroll-indicator" onclick="document.querySelector('.container').scrollIntoView()">↓</div>
     </div>
 
     <div class="container">
-        
-        <!-- PROTOCOL SECTIONS 1-4 (SAME AS BEFORE) -->
+        <!-- PROTOCOL SECTIONS 1-4 (Unchanged) -->
         <div class="section">
             <div class="section-header" onclick="toggleSection('section1')">
                 <div class="section-number">1</div>
                 <div class="section-title">Core System & Discipline Protocols <span class="status-indicator"></span></div>
             </div>
             <div class="collapsible-content active" id="section1">
-                <!-- Content for Section 1 goes here -->
                 <div class="protocol">
                     <div class="protocol-title">1.1 Daily Stand-up</div>
                     <div class="protocol-need">NEED: Enforce accountability, track metrics, prevent aimless drift</div>
@@ -368,7 +193,6 @@
                         <p><strong>Protocol:</strong> Report precisely on the previous day's metrics. Be prepared to state the reason for any failures.</p>
                     </div>
                 </div>
-
                 <div class="protocol">
                     <div class="protocol-title">1.2 Foundational Health Protocols</div>
                     <div class="protocol-need">NEED: The physical body is the hardware for the mind. Degraded hardware cannot run high-performance software.</div>
@@ -381,7 +205,6 @@
                         </ul>
                     </div>
                 </div>
-
                 <div class="protocol">
                     <div class="protocol-title">1.3 Shutdown Protocol 2200</div>
                     <div class="protocol-need">NEED: Enforce strict sleep schedule critical for learning, recovery, and preventing late-night discipline failures.</div>
@@ -393,32 +216,23 @@
                 </div>
             </div>
         </div>
-        
         <div class="quote-divider">
-            <blockquote>
-                "It won't always go your way, so you can't get trapped in this idea that just because you've imagined a possibility for yourself that you somehow deserve it. Your entitled mind is dead weight. Cut it loose."
-                <cite>— David Goggins</cite>
-            </blockquote>
+            <blockquote>"It won't always go your way, so you can't get trapped in this idea that just because you've imagined a possibility for yourself that you somehow deserve it. Your entitled mind is dead weight. Cut it loose."<cite>— David Goggins</cite></blockquote>
         </div>
-
         <div class="section">
             <div class="section-header" onclick="toggleSection('section2')">
                 <div class="section-number">2</div>
                 <div class="section-title">Mission Execution (Work) Protocols <span class="status-indicator"></span></div>
             </div>
             <div class="collapsible-content active" id="section2">
-               <!-- Content for Section 2 -->
                 <div class="protocol">
                     <div class="protocol-title">2.1 The Engineer's Invocation</div>
                     <div class="protocol-need">NEED: Prime your identity and focus immediately before deep work, overwriting the "lazy person" identity.</div>
                     <div class="protocol-execution">
                         <p><strong>State Aloud Before Each Work Block:</strong></p>
-                        <p style="color: #ff0000; font-size: 1.1rem; font-weight: bold; padding: 1rem; background: rgba(255,0,0,0.1); border-radius: 4px;">
-                            "I am an engineer-in-training. My objective for the next 90 minutes is to master [Specific Concept]. This is the only mission that matters. I will now execute."
-                        </p>
+                        <p style="color: #ff0000; font-size: 1.1rem; font-weight: bold; padding: 1rem; background: rgba(255,0,0,0.1); border-radius: 4px;">"I am an engineer-in-training. My objective for the next 90 minutes is to master [Specific Concept]. This is the only mission that matters. I will now execute."</p>
                     </div>
                 </div>
-
                 <div class="protocol">
                     <div class="protocol-title">2.2 Active Knowledge Acquisition</div>
                     <div class="protocol-need">NEED: Transform passive, low-value content consumption into active, high-value learning process.</div>
@@ -431,133 +245,86 @@
                         </ul>
                     </div>
                 </div>
-
                 <div class="protocol">
                     <div class="protocol-title">2.3 Minimum Viable Day (MVD)</div>
                     <div class="protocol-need">NEED: Prevent system shutdown on high-chaos days. Ensure the chain of progress is never broken.</div>
                     <div class="protocol-execution">
                         <div class="mvd-badge">⚠️ EMERGENCY PROTOCOL</div>
                         <p>On days where the full plan is impossible, execute the MVD:</p>
-                        <ul>
-                            <li>1x 25-minute Pomodoro Block on the Prime Objective</li>
-                            <li>100 Push-ups (in sets)</li>
-                            <li>Maintain Diet > 7 and Zero Poison</li>
-                        </ul>
+                        <ul><li>1x 25-minute Pomodoro Block on the Prime Objective</li><li>100 Push-ups (in sets)</li><li>Maintain Diet > 7 and Zero Poison</li></ul>
                     </div>
                 </div>
-
                 <div class="protocol">
                     <div class="protocol-title">2.4 Project Integration</div>
                     <div class="protocol-need">NEED: Manage large, external projects without derailing the Prime Objective.</div>
                     <div class="protocol-execution">
-                        <ul>
-                            <li>Define and scope the project with a deadline</li>
-                            <li>Time-block the project in your calendar around immovable deep work sessions</li>
-                        </ul>
+                        <ul><li>Define and scope the project with a deadline</li><li>Time-block the project in your calendar around immovable deep work sessions</li></ul>
                     </div>
                 </div>
             </div>
         </div>
-        
         <div class="quote-divider">
-            <blockquote>
-                "The only way you gain mental toughness is to do things you're not happy doing. If you continue doing things that you're satisfied and make you happy, you're not getting stronger."
-                <cite>— David Goggins</cite>
-            </blockquote>
+            <blockquote>"The only way you gain mental toughness is to do things you're not happy doing. If you continue doing things that you're satisfied and make you happy, you're not getting stronger."<cite>— David Goggins</cite></blockquote>
         </div>
-        
         <div class="section">
             <div class="section-header" onclick="toggleSection('section3')">
                 <div class="section-number">3</div>
                 <div class="section-title">System Defense Protocols <span class="status-indicator"></span></div>
             </div>
             <div class="collapsible-content active" id="section3">
-                <!-- Content for Section 3 -->
                 <div class="protocol">
                     <div class="protocol-title">3.1 Environmental Protocol 1.1</div>
                     <div class="protocol-need">NEED: Create a sterile, distraction-free workspace optimized for deep work.</div>
-                    <div class="protocol-execution">
-                        <p><strong>Execution:</strong> Desk contains only your computer and a notebook. All other items are stored out of sight.</p>
-                    </div>
+                    <div class="protocol-execution"><p><strong>Execution:</strong> Desk contains only your computer and a notebook. All other items are stored out of sight.</p></div>
                 </div>
-
                 <div class="protocol">
                     <div class="protocol-title">3.2 The Black Mirror Protocol</div>
                     <div class="protocol-need">NEED: Neutralize your phone as a primary vector of distraction and cognitive poison.</div>
-                    <div class="protocol-execution">
-                        <ul>
-                            <li><strong>Grayscale Mode:</strong> Permanently enabled</li>
-                            <li><strong>Notification Zero:</strong> Only human-to-human notifications permitted</li>
-                            <li><strong>Relocation:</strong> Phone is in another room during deep work</li>
-                        </ul>
-                    </div>
+                    <div class="protocol-execution"><ul><li><strong>Grayscale Mode:</strong> Permanently enabled</li><li><strong>Notification Zero:</strong> Only human-to-human notifications permitted</li><li><strong>Relocation:</strong> Phone is in another room during deep work</li></ul></div>
                 </div>
-
                 <div class="protocol">
                     <div class="protocol-title">3.3 The Loop Interrupt Protocol (Anti-Addiction)</div>
                     <div class="protocol-need">NEED: Dismantle specific dopamine loops.</div>
-                    <div class="protocol-execution">
-                        <ul>
-                            <li><strong>Identify:</strong> Recognize the trigger (Boredom, Loneliness, Lust)</li>
-                            <li><strong>Create Friction:</strong> Blockers installed, apps deleted, phone banned from bedroom</li>
-                            <li><strong>Interrupt:</strong> When trigger is felt, immediately execute: 50 push-ups or 50 squats</li>
-                        </ul>
-                    </div>
+                    <div class="protocol-execution"><ul><li><strong>Identify:</strong> Recognize the trigger (Boredom, Loneliness, Lust)</li><li><strong>Create Friction:</strong> Blockers installed, apps deleted, phone banned from bedroom</li><li><strong>Interrupt:</strong> When trigger is felt, immediately execute: 50 push-ups or 50 squats</li></ul></div>
                 </div>
-
                 <div class="protocol">
                     <div class="protocol-title">3.4 Pre-Mission Social Briefing</div>
                     <div class="protocol-need">NEED: Prevent discipline collapse in high-risk social environments.</div>
-                    <div class="protocol-execution">
-                        <p><strong>Before the event, create a written plan:</strong></p>
-                        <ul>
-                            <li>Assess the threats</li>
-                            <li>Eat a compliant meal beforehand</li>
-                            <li>Define your rules of engagement (e.g., "I will drink only water," "Hard exit at 22:00")</li>
-                        </ul>
-                    </div>
+                    <div class="protocol-execution"><p><strong>Before the event, create a written plan:</strong></p><ul><li>Assess the threats</li><li>Eat a compliant meal beforehand</li><li>Define your rules of engagement (e.g., "I will drink only water," "Hard exit at 22:00")</li></ul></div>
                 </div>
             </div>
         </div>
-
         <div class="quote-divider">
-            <blockquote>
-                "We live in an external world. Everything, you have to see it, touch it. If you can for the rest of your life, live inside yourself - to find greatness, you have to go inside."
-                <cite>— David Goggins</cite>
-            </blockquote>
+            <blockquote>"We live in an external world. Everything, you have to see it, touch it. If you can for the rest of your life, live inside yourself - to find greatness, you have to go inside."<cite>— David Goggins</cite></blockquote>
         </div>
-        
         <div class="section">
             <div class="section-header" onclick="toggleSection('section4')">
                 <div class="section-number">4</div>
                 <div class="section-title">Contingency Protocols <span class="status-indicator"></span></div>
             </div>
             <div class="collapsible-content active" id="section4">
-                <!-- Content for Section 4 -->
-                 <div class="protocol">
+                <div class="protocol">
                     <div class="protocol-title">4.1 Medical Standby</div>
                     <div class="protocol-need">NEED: Manage illness without total system collapse and ensure structured recovery.</div>
-                    <div class="protocol-execution">
-                        <div class="mvd-badge">🚨 MEDICAL STANDBY ACTIVATED</div>
-                        <ul>
-                            <li><strong>Declare:</strong> Transmit "Activating Medical Standby"</li>
-                            <li><strong>Maintain MVH:</strong> Focus only on Hydration, Nutrition, and Zero Poison</li>
-                            <li><strong>Reboot Sequence:</strong> Follow the 3-day phased return to full operational tempo</li>
-                        </ul>
-                    </div>
+                    <div class="protocol-execution"><div class="mvd-badge">🚨 MEDICAL STANDBY ACTIVATED</div><ul><li><strong>Declare:</strong> Transmit "Activating Medical Standby"</li><li><strong>Maintain MVH:</strong> Focus only on Hydration, Nutrition, and Zero Poison</li><li><strong>Reboot Sequence:</strong> Follow the 3-day phased return to full operational tempo</li></ul></div>
                 </div>
             </div>
         </div>
 
         <!-- NEW NOTES SECTION -->
-        <div class="section">
+        <div class="section" id="notes-section">
             <div class="section-header" onclick="toggleSection('section5')">
                 <div class="section-number">5</div>
-                <div class="section-title">System Log / Notes <span class="status-indicator"></span></div>
+                <div class="section-title">System Log & Notes <span class="status-indicator"></span></div>
             </div>
             <div class="collapsible-content active" id="section5">
-                <p style="color: #aaa; margin-bottom: 1rem;">This is your personal log. Thoughts and notes typed here are saved automatically to your browser's local storage.</p>
-                <div id="notes-editor" contenteditable="true" onkeyup="saveNotes()"></div>
+                <div class="protocol-need" style="color:#ff5555;">IMPORTANT: Notes are NOT saved automatically. After editing, click "Download Full Blueprint" to save a new version of this file with your notes included.</div>
+                <textarea id="notes-editor"><!-- YOUR NOTES ARE STORED HERE. LEAVE THIS COMMENT. --></textarea>
+                <div class="notes-controls">
+                    <button class="btn" onclick="addLogEntry()">Add Log Entry Template</button>
+                    <button class="btn" onclick="downloadNotesTxt()">Download Notes as .TXT</button>
+                    <button class="btn btn-primary" onclick="downloadFullBlueprint()">Download Full Blueprint (with Notes)</button>
+                </div>
             </div>
         </div>
 
@@ -575,19 +342,16 @@
 
     <script>
         // --- CORE FUNCTIONALITY ---
-
-        // Function to toggle collapsible sections
         function toggleSection(sectionId) {
-            const content = document.getElementById(sectionId);
-            content.classList.toggle('active');
+            document.getElementById(sectionId).classList.toggle('active');
         }
 
-        // Animate sections on scroll
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     entry.target.style.opacity = '1';
                     entry.target.style.transform = 'translateY(0)';
+                    observer.unobserve(entry.target);
                 }
             });
         }, { threshold: 0.1 });
@@ -595,59 +359,91 @@
         document.querySelectorAll('.section').forEach(section => {
             section.style.opacity = '0';
             section.style.transform = 'translateY(50px)';
-            section.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
             observer.observe(section);
         });
 
-        // Smooth scroll for hero button
-        document.querySelector('.scroll-indicator').addEventListener('click', () => {
-            window.scrollTo({ top: window.innerHeight, behavior: 'smooth' });
-        });
-        
         // --- NEW DYNAMIC FUNCTIONALITY ---
-
+        
         // 1. DYNAMIC DATE AND TIMESTAMPS
         function setDynamicDates() {
             const currentDateElement = document.getElementById('current-date-display');
             const lastModifiedElement = document.getElementById('last-modified-display');
-
-            // Set the main "As of" date to today
             const today = new Date();
             const options = { year: 'numeric', month: 'long', day: 'numeric' };
             currentDateElement.textContent = `System Protocols • ${today.toLocaleDateString(undefined, options)}`;
-
-            // Set the "Last Modified" date from the file properties
             if (document.lastModified) {
-                lastModifiedElement.textContent = `Last Modified: ${document.lastModified}`;
+                lastModifiedElement.textContent = `Blueprint Last Modified: ${document.lastModified}`;
             }
         }
 
-        // 2. NOTES SECTION WITH LOCAL STORAGE
+        // 2. QUICK NAVIGATION
+        function scrollToNotes() {
+            document.getElementById('notes-section').scrollIntoView();
+        }
+
+        // 3. NOTES AND LOGS
         const notesEditor = document.getElementById('notes-editor');
 
-        // Function to save notes to local storage
-        function saveNotes() {
-            localStorage.setItem('blueprint_notes', notesEditor.innerHTML);
+        function addLogEntry() {
+            const now = new Date();
+            const year = now.getFullYear();
+            const month = String(now.getMonth() + 1).padStart(2, '0');
+            const day = String(now.getDate()).padStart(2, '0');
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const timestamp = `${year}-${month}-${day} ${hours}:${minutes}`;
+            
+            const template = `\n\n--- LOG ENTRY: ${timestamp} ---\n\n- Metric 1:\n- Metric 2:\n- Observations:\n`;
+            
+            notesEditor.value += template;
+            notesEditor.scrollTop = notesEditor.scrollHeight; // Auto-scroll to bottom
+            notesEditor.focus();
         }
 
-        // Function to load notes from local storage
-        function loadNotes() {
-            const savedNotes = localStorage.getItem('blueprint_notes');
-            if (savedNotes) {
-                notesEditor.innerHTML = savedNotes;
-            } else {
-                // Default text if no notes are saved yet
-                notesEditor.innerHTML = '<div>What is on your mind</div>';
-            }
+        // 4. DOWNLOAD FUNCTIONALITY
+        
+        // Function to download ONLY the notes as a .txt file
+        function downloadNotesTxt() {
+            const textContent = notesEditor.value;
+            const blob = new Blob([textContent], { type: 'text/plain;charset=utf-8' });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = `Blueprint-Notes-${new Date().toISOString().slice(0,10)}.txt`;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            URL.revokeObjectURL(url);
+        }
+
+        // Function to download the ENTIRE HTML file with updated notes
+        function downloadFullBlueprint() {
+            const notesContent = notesEditor.value;
+            
+            // We need to escape the closing textarea tag if it appears in the notes
+            const safeNotesContent = notesContent.replace(/<\/textarea>/g, '&lt;/textarea&gt;');
+
+            // Get the entire current HTML of the page
+            const currentHtml = document.documentElement.outerHTML;
+            
+            // Replace the placeholder comment in the textarea with the new, safe content
+            const newHtml = currentHtml.replace(/<!-- YOUR NOTES ARE STORED HERE. LEAVE THIS COMMENT. -->/, safeNotesContent);
+
+            const blob = new Blob([newHtml], { type: 'text/html;charset=utf-8' });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = 'index.html'; // Name the file so it's easy to replace
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            URL.revokeObjectURL(url);
         }
 
         // --- INITIALIZATION ---
-        // Run these functions when the page has fully loaded
         window.onload = () => {
             setDynamicDates();
-            loadNotes();
         };
-
     </script>
 </body>
 </html>
