@@ -334,10 +334,13 @@
             <div class="collapsible-content active" id="content5">
                 <div class="protocol-need" style="color:#ffaa00;">Notes are not saved to this file. Use the buttons to add a timestamped log entry and download your notes as a separate .txt file.</div>
                 <textarea id="notes-editor"></textarea>
-                <div class="notes-controls">
-                    <button class="btn" onclick="addLogEntry()">Add Log Entry Template</button>
-                    <button class="btn" onclick="downloadNotesTxt()">Download Notes as .TXT</button>
-                </div>
+                
+<div class="notes-controls">
+    <button class="btn" onclick="addLogEntry()">Add Log Entry Template</button>
+    <button class="btn" onclick="downloadNotesTxt()">Download Local .TXT</button>
+    <button class="btn" id="save-cloud-btn" onclick="saveToCloud()">⚡ SYNC TO DATABASE</button>
+</div>
+                
             </div>
         </div>
 
@@ -354,6 +357,10 @@
     </footer>
 
     <script>
+
+        // --- CONFIGURATION ---
+// PASTE YOUR GOOGLE WEB APP URL INSIDE THE QUOTES BELOW
+const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbw7mYue4T8fQ4t3-fzPgQ7QaZUyMcz-MDks8C4Sdo34rVpm7jGF5UDNKiBGNm4KSJRPrg/exec";
         // --- CORE FUNCTIONALITY ---
         function toggleSection(contentId) {
             document.getElementById(contentId).classList.toggle('active');
@@ -396,7 +403,51 @@
 
         // 3. NOTES AND LOGS
         const notesEditor = document.getElementById('notes-editor');
+        function saveToCloud() {
+    const noteContent = document.getElementById('notes-editor').value;
+    const saveBtn = document.getElementById('save-cloud-btn');
 
+    if (!noteContent.trim()) {
+        alert("Protocol Failure: Cannot save empty logs.");
+        return;
+    }
+
+    // UI Feedback: Loading State
+    const originalText = saveBtn.innerText;
+    saveBtn.innerText = "UPLOADING...";
+    saveBtn.style.background = "#ff0000";
+    saveBtn.style.color = "#fff";
+    saveBtn.disabled = true;
+
+    // Prepare Form Data for Google Script
+    const formData = new FormData();
+    formData.append("note", noteContent);
+
+    fetch(GOOGLE_SCRIPT_URL, {
+        method: "POST",
+        body: formData,
+        mode: "no-cors" // Important: Google Scripts requires no-cors mode for simple POSTs
+    })
+    .then(response => {
+        // Because of 'no-cors', we won't get a standard JSON response readable here,
+        // but if no error is thrown, it reached the endpoint.
+        alert("SUCCESS: Logs secured in the database.");
+        
+        // Optional: Clear the box after save? 
+        // document.getElementById('notes-editor').value = ""; 
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert("CRITICAL FAILURE: Connection to database lost.");
+    })
+    .finally(() => {
+        // Reset Button
+        saveBtn.innerText = originalText;
+        saveBtn.style.background = "transparent";
+        saveBtn.style.color = "#ff0000";
+        saveBtn.disabled = false;
+    });
+}
         function addLogEntry() {
             const now = new Date();
             const year = now.getFullYear();
